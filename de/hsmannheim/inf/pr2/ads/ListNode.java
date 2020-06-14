@@ -61,7 +61,7 @@ public class ListNode<E>  {
    * @return Die neue Liste mit neuem Knoten am Anfang.
    */
   public ListNode<E> addFirst(E value) {
-    return new ListNode<>(value, this);
+    return new ListNode<E>(value, this);
   }
 
 

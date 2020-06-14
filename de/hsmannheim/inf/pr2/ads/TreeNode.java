@@ -1,6 +1,10 @@
 package de.hsmannheim.inf.pr2.ads;
 
 
+import com.sun.source.tree.Tree;
+
+import java.util.LinkedList;
+
 /**
  * Ein Knoten für einen Binärbaum.
  * Dieser Knoten kann selbst als eigener Binärbaum aufgefasst werden.
@@ -54,9 +58,22 @@ public class TreeNode<E> {
    * @return
    */
   public int height() {
-    // Noch nicht implementiert.
-    return 0;
+    var leftHeight = 0;
+    var rightHeight = 0;
+    var node = this;
+    while(node.left != null){
+      leftHeight++;
+    }
+    while(node.right != null){
+      rightHeight++;
+    }
+    if(leftHeight>rightHeight)
+      return leftHeight;
+    else
+      return rightHeight;
   }
+
+
 
   /**
    * Bestimmt die Anzahl der Elemente in diesem Baum.
@@ -88,6 +105,19 @@ public class TreeNode<E> {
     return value + " ";
   }
 
+  public void printPreorder(){
+    printPreorder(this);
+    System.out.println();
+  }
+
+  public void printPreorder(TreeNode<E> node){
+    if(node != null){
+      System.out.println(node.value);
+      printPreorder(node.left);
+      printPreorder(node.right);
+    }
+  }
+
   /**
    * Gibt den Baum ab dem Wurzelknoten in Inorder-Reihenfolge
    * auf die Konsole aus.
@@ -110,6 +140,53 @@ public class TreeNode<E> {
       System.out.println(node.toString());
       printInorder(node.getRight());
     }
+  }
+
+  public void printLevelorder(){
+    printLevelorder(this);
+    System.out.println();
+  }
+
+  public void printLevelorder(TreeNode<E> node){
+    var q = new LinkedList<TreeNode<E>>();
+    q.add(node);
+
+    while(!q.isEmpty()){
+      node = q.poll();
+      System.out.println(node.value);
+      if(node.left != null)
+        q.add(node.left);
+      if(node.right!= null)
+        q.add(node.right);
+    }
+  }
+
+
+  public int balance(){
+    var leftHeight = 0;
+    var rightHeight = 0;
+    var node = this;
+    while(node.left != null){
+      leftHeight++;
+      node = node.left;
+    }
+    node = this;
+    while(node.right != null){
+      rightHeight++;
+      node = node.right;
+    }
+    return leftHeight-rightHeight;
+  }
+
+  public static void main(String[] args) {
+    var tree = new TreeNode<Integer>(1,
+            new TreeNode<Integer>(3,
+                    new TreeNode<Integer>(5),
+                    new TreeNode<Integer>(4)),
+            new TreeNode<Integer>(4));
+
+    System.out.println(tree.balance());
+
   }
 
 }
