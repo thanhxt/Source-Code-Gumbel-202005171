@@ -132,9 +132,9 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
 
      */
 
-    public boolean isBST(){
+    public boolean isSearchTree(){
 
-        return isBST(null,null);
+        return isSearchTree(null,null);
     }
 
     /**
@@ -143,7 +143,7 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
      * @param max obere Schranke
      * @return true, if Wert an jeder Stelle die BST Bedingung erfüllt
      */
-    public boolean isBST(E min, E max){
+    public boolean isSearchTree(E min, E max){
         var result = true;
 
         //wenn value value > min
@@ -154,10 +154,10 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
             result = (this.value.compareTo(max) < 0) && result;
         //linker Knoten runter
         if(this.left != null)
-            result = result && (this.left.isBST(min,this.value));
+            result = result && (this.left.isSearchTree(min,this.value));
         //rechter Knoten runter
         if(this.right != null)
-            result = result && (this.right.isBST(this.value,max));
+            result = result && (this.right.isSearchTree(this.value,max));
         return result;
     }
 
@@ -168,7 +168,7 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
      * @return
      */
     public boolean isAVLTree(){
-        if(isBST()){
+        if(isSearchTree()){
             if(balance() <= 1 || balance() > -1){
                 return true;
             }
@@ -193,7 +193,7 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
                             null)
                     );
 
-        System.out.println(s.isBST());
+        System.out.println(s.isSearchTree());
         System.out.println(s.isAVLTree());
         System.out.println(s.balance());
         s.printPreorder();
@@ -206,10 +206,9 @@ public class AVLTreeNode<E extends Comparable<E>> extends TreeNode<E> {
                                 new AVLTreeNode<Integer>(4)),
                          new AVLTreeNode<Integer>(4));
 
-        System.out.println(tree.isBST());
+        System.out.println(tree.isSearchTree());
         var d = new AVLTreeNode<Integer>(null,null,null);
         d.insert(10);
-        d.insert(6);
 
 
 
